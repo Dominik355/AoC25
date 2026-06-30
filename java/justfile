@@ -1,0 +1,72 @@
+set shell := ["bash", "-uc"]
+
+default:
+    @just --list
+
+run day:
+    @./gradlew "day$(printf '%02d' {{day}})" -q
+
+day1: (run "1")
+day2: (run "2")
+day3: (run "3")
+day4: (run "4")
+day5: (run "5")
+day6: (run "6")
+day7: (run "7")
+day8: (run "8")
+day9: (run "9")
+
+# --- Scaffolding ------------------------------------------------------------
+# Create a new day: package dir, Solution.java from template, empty input file.
+# e.g. `just new 3`
+new day:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    nn=$(printf '%02d' {{day}})
+    n=$((10#{{day}}))
+    pkg="src/main/java/eu/bilik/aoc25/day${nn}"
+    file="${pkg}/Solution.java"
+    if [[ -f "$file" ]]; then echo "day${nn} already exists at $file"; exit 1; fi
+    mkdir -p "$pkg"
+    cat > "$file" <<EOF
+    package eu.bilik.aoc25.day${nn};
+
+    import eu.bilik.aoc25.common.Context;
+    import eu.bilik.aoc25.common.Day;
+    import eu.bilik.aoc25.common.Runner;
+
+    import java.util.List;
+
+    public class Solution implements Day {
+
+        @Override
+        public Object part1(Context context) {
+            return "TODO";
+        }
+
+        @Override
+        public Object part2(Context context) {
+            return "TODO";
+        }
+
+        public static void main(String[] args) {
+            Runner.run(${n}, new Solution());
+        }
+    }
+    EOF
+    touch "inputs/day${nn}.txt"
+    echo "Created $file and inputs/day${nn}.txt"
+
+# --- Build / housekeeping ---------------------------------------------------
+build:
+    @./gradlew build
+
+test:
+    @./gradlew test
+
+clean:
+    @./gradlew clean
+
+# List the day run tasks Gradle has discovered
+tasks:
+    @./gradlew tasks --group aoc -q

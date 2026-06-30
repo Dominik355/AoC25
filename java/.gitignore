@@ -1,0 +1,12 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+
+# Ignore Kotlin plugin data
+.kotlin
+
+# Puzzle inputs are personal to each AoC account — don't commit them
+inputs/*.txt
+!inputs/.gitkeep
