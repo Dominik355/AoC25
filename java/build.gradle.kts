@@ -17,6 +17,8 @@ dependencies {
     // (2.50.0 removed predicates.type.DescendantOf, which NullAway still references).
     errorprone("com.google.errorprone:error_prone_core:2.41.0")
     errorprone("com.uber.nullaway:nullaway:0.12.7")
+    compileOnly("org.jspecify:jspecify:1.0.0")
+    implementation("io.vavr:vavr:1.0.1")
 }
 
 java {
